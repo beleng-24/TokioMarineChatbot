@@ -1,0 +1,185 @@
+{
+  "group_name": "Aurora Dynamics",
+  "generated_at": "2025-11-15T15:39:48.248664",
+  "total_fields": 25,
+  "found_fields": 21,
+  "missing_fields": 4,
+  "avg_confidence": 0.7212000000000001,
+  "fields": [
+    {
+      "field": "Group Name",
+      "value": "Aurora Dynamics",
+      "confidence": 0.95,
+      "page": 1,
+      "status": "found"
+    },
+    {
+      "field": "Group Eff Date",
+      "value": "March 1, 2026",
+      "confidence": 0.95,
+      "page": 1,
+      "status": "found"
+    },
+    {
+      "field": "TPA",
+      "value": "BluePeak Benefits Solutions",
+      "confidence": 0.9,
+      "page": 1,
+      "status": "found"
+    },
+    {
+      "field": "UR Vendor",
+      "value": "MedAxis Review Group",
+      "confidence": 0.92,
+      "page": 1,
+      "status": "found"
+    },
+    {
+      "field": "PPO Network",
+      "value": "HealthSphere Alliance",
+      "confidence": 0.93,
+      "page": 1,
+      "status": "found"
+    },
+    {
+      "field": "Min Hour Requirement",
+      "value": "28 hours per week",
+      "confidence": 0.88,
+      "page": 1,
+      "status": "found"
+    },
+    {
+      "field": "Retirees",
+      "value": "Not Found",
+      "confidence": 0.0,
+      "page": 4,
+      "status": "found"
+    },
+    {
+      "field": "BOD Directors Officers",
+      "value": "Not eligible",
+      "confidence": 0.91,
+      "page": 4,
+      "status": "found"
+    },
+    {
+      "field": "Dependent Definitions",
+      "value": "Legal spouse, child, domestic partner",
+      "confidence": 0.89,
+      "page": 9,
+      "status": "found"
+    },
+    {
+      "field": "Req Adding Dependents",
+      "value": "Within 30 days of qualifying event",
+      "confidence": 0.87,
+      "page": 8,
+      "status": "found"
+    },
+    {
+      "field": "Dependent to Age 26",
+      "value": "End of month child turns 26",
+      "confidence": 0.9,
+      "page": 8,
+      "status": "found"
+    },
+    {
+      "field": "Grandchildren",
+      "value": "Not eligible unless legal guardian",
+      "confidence": 0.85,
+      "page": 9,
+      "status": "found"
+    },
+    {
+      "field": "Termination Provisions",
+      "value": "Final day of employment",
+      "confidence": 0.92,
+      "page": 4,
+      "status": "found"
+    },
+    {
+      "field": "Open Enrollment",
+      "value": "N/F",
+      "confidence": 0.0,
+      "page": null,
+      "status": "missing"
+    },
+    {
+      "field": "Leave of Absence",
+      "value": "N/F",
+      "confidence": 0.0,
+      "page": null,
+      "status": "missing"
+    },
+    {
+      "field": "Medically Necessary",
+      "value": "Services required to diagnose or treat",
+      "confidence": 0.88,
+      "page": 8,
+      "status": "found"
+    },
+    {
+      "field": "E&I",
+      "value": "Not widely accepted as standard care",
+      "confidence": 0.86,
+      "page": 8,
+      "status": "found"
+    },
+    {
+      "field": "R&C",
+      "value": "Typical charge in geographic area $1,000 example",
+      "confidence": 0.89,
+      "page": 8,
+      "status": "found"
+    },
+    {
+      "field": "Workers Comp",
+      "value": "Excluded",
+      "confidence": 0.93,
+      "page": 9,
+      "status": "found"
+    },
+    {
+      "field": "Transplant",
+      "value": "Covered - see Transplant Benefits Section",
+      "confidence": 0.91,
+      "page": 5,
+      "status": "found"
+    },
+    {
+      "field": "ETS Gene Therapy",
+      "value": "N/F",
+      "confidence": 0.0,
+      "page": null,
+      "status": "missing"
+    },
+    {
+      "field": "COB",
+      "value": "Coordinates when covered by multiple plans",
+      "confidence": 0.88,
+      "page": 7,
+      "status": "found"
+    },
+    {
+      "field": "COBRA",
+      "value": "18 months post-employment",
+      "confidence": 0.94,
+      "page": 4,
+      "status": "found"
+    },
+    {
+      "field": "Subrogation",
+      "value": "N/F",
+      "confidence": 0.0,
+      "page": null,
+      "status": "missing"
+    },
+    {
+      "field": "Infertility",
+      "value": "$15,000 per family per year",
+      "confidence": 0.87,
+      "page": 9,
+      "status": "found"
+    }
+  ]
+}
