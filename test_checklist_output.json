@@ -1,0 +1,246 @@
+{
+  "metadata": {
+    "generated_at": "2025-11-17T15:58:14.037503",
+    "source_file": "test_orange_output_demo.xlsx",
+    "group_name": "Test Medical Group Inc."
+  },
+  "summary": {
+    "total_fields": 25,
+    "found_fields": 24,
+    "missing_fields": 1,
+    "completion_rate": "96.0%",
+    "average_confidence": "83.6%"
+  },
+  "confidence_breakdown": {
+    "high_confidence": 22,
+    "medium_confidence": 2,
+    "low_confidence": 1
+  },
+  "fields": [
+    {
+      "field_name": "Group Name",
+      "extracted_value": "Test Medical Group Inc.",
+      "confidence": "95%",
+      "confidence_level": "High",
+      "page_number": 1,
+      "status": "Found",
+      "location": "Header section"
+    },
+    {
+      "field_name": "Group Number",
+      "extracted_value": "TMG-2025-12345",
+      "confidence": "92%",
+      "confidence_level": "High",
+      "page_number": 1,
+      "status": "Found",
+      "location": "Header section"
+    },
+    {
+      "field_name": "Effective Date",
+      "extracted_value": "01/01/2025",
+      "confidence": "88%",
+      "confidence_level": "High",
+      "page_number": 1,
+      "status": "Found",
+      "location": "Plan details"
+    },
+    {
+      "field_name": "Plan Year",
+      "extracted_value": "2025",
+      "confidence": "90%",
+      "confidence_level": "High",
+      "page_number": 1,
+      "status": "Found",
+      "location": "Plan details"
+    },
+    {
+      "field_name": "Third Party Administrator",
+      "extracted_value": "Blue Cross Claims Administration",
+      "confidence": "85%",
+      "confidence_level": "High",
+      "page_number": 2,
+      "status": "Found",
+      "location": "Administrator info"
+    },
+    {
+      "field_name": "TPA Address",
+      "extracted_value": "123 Insurance Way, Boston, MA 02101",
+      "confidence": "82%",
+      "confidence_level": "High",
+      "page_number": 2,
+      "status": "Found",
+      "location": "Administrator info"
+    },
+    {
+      "field_name": "TPA Phone",
+      "extracted_value": "(800) 555-1234",
+      "confidence": "87%",
+      "confidence_level": "High",
+      "page_number": 2,
+      "status": "Found",
+      "location": "Administrator info"
+    },
+    {
+      "field_name": "Medical Plan Type",
+      "extracted_value": "PPO",
+      "confidence": "91%",
+      "confidence_level": "High",
+      "page_number": 3,
+      "status": "Found",
+      "location": "Plan type section"
+    },
+    {
+      "field_name": "Deductible Individual",
+      "extracted_value": "$1,500",
+      "confidence": "89%",
+      "confidence_level": "High",
+      "page_number": 4,
+      "status": "Found",
+      "location": "Cost sharing"
+    },
+    {
+      "field_name": "Deductible Family",
+      "extracted_value": "$3,000",
+      "confidence": "86%",
+      "confidence_level": "High",
+      "page_number": 4,
+      "status": "Found",
+      "location": "Cost sharing"
+    },
+    {
+      "field_name": "Out of Pocket Max Individual",
+      "extracted_value": "$5,000",
+      "confidence": "84%",
+      "confidence_level": "High",
+      "page_number": 4,
+      "status": "Found",
+      "location": "Cost sharing"
+    },
+    {
+      "field_name": "Out of Pocket Max Family",
+      "extracted_value": "$10,000",
+      "confidence": "83%",
+      "confidence_level": "High",
+      "page_number": 4,
+      "status": "Found",
+      "location": "Cost sharing"
+    },
+    {
+      "field_name": "Coinsurance",
+      "extracted_value": "80/20",
+      "confidence": "90%",
+      "confidence_level": "High",
+      "page_number": 5,
+      "status": "Found",
+      "location": "Benefits table"
+    },
+    {
+      "field_name": "Primary Care Physician Copay",
+      "extracted_value": "$25",
+      "confidence": "88%",
+      "confidence_level": "High",
+      "page_number": 6,
+      "status": "Found",
+      "location": "Copays section"
+    },
+    {
+      "field_name": "Specialist Copay",
+      "extracted_value": "$50",
+      "confidence": "87%",
+      "confidence_level": "High",
+      "page_number": 6,
+      "status": "Found",
+      "location": "Copays section"
+    },
+    {
+      "field_name": "Emergency Room Copay",
+      "extracted_value": "$250",
+      "confidence": "85%",
+      "confidence_level": "High",
+      "page_number": 7,
+      "status": "Found",
+      "location": "Emergency benefits"
+    },
+    {
+      "field_name": "Urgent Care Copay",
+      "extracted_value": "$75",
+      "confidence": "86%",
+      "confidence_level": "High",
+      "page_number": 7,
+      "status": "Found",
+      "location": "Urgent care section"
+    },
+    {
+      "field_name": "Prescription Drug Coverage",
+      "extracted_value": "Yes",
+      "confidence": "94%",
+      "confidence_level": "High",
+      "page_number": 8,
+      "status": "Found",
+      "location": "Pharmacy benefits"
+    },
+    {
+      "field_name": "Pharmacy Network",
+      "extracted_value": "CVS Caremark",
+      "confidence": "89%",
+      "confidence_level": "High",
+      "page_number": 9,
+      "status": "Found",
+      "location": "Pharmacy network"
+    },
+    {
+      "field_name": "Retail Copay Generic",
+      "extracted_value": "$10",
+      "confidence": "91%",
+      "confidence_level": "High",
+      "page_number": 10,
+      "status": "Found",
+      "location": "Prescription costs"
+    },
+    {
+      "field_name": "Retail Copay Brand",
+      "extracted_value": "$35",
+      "confidence": "90%",
+      "confidence_level": "High",
+      "page_number": 10,
+      "status": "Found",
+      "location": "Prescription costs"
+    },
+    {
+      "field_name": "Mail Order Available",
+      "extracted_value": "Yes - 90 day supply",
+      "confidence": "87%",
+      "confidence_level": "High",
+      "page_number": 10,
+      "status": "Found",
+      "location": "Prescription options"
+    },
+    {
+      "field_name": "Utilization Review Vendor",
+      "extracted_value": "MedReview Services LLC",
+      "confidence": "78%",
+      "confidence_level": "Medium",
+      "page_number": 11,
+      "status": "Found",
+      "location": "UR section"
+    },
+    {
+      "field_name": "Mental Health Provider",
+      "extracted_value": "Beacon Health Options",
+      "confidence": "72%",
+      "confidence_level": "Medium",
+      "page_number": 12,
+      "status": "Found",
+      "location": "Mental health"
+    },
+    {
+      "field_name": "Vision Coverage",
+      "extracted_value": "N/F",
+      "confidence": "0%",
+      "confidence_level": "Low",
+      "page_number": "N/A",
+      "status": "Missing",
+      "location": "Not found"
+    }
+  ]
+}
