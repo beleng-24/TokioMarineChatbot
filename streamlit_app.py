@@ -120,6 +120,201 @@ def get_confidence_color(confidence):
     else:
         return "🔴"
 
+def generate_excel_checklist(df, group_name):
+    """Generate formatted Excel checklist matching the Draft Checklist format"""
+    from io import BytesIO
+    from openpyxl import Workbook
+    from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
+    
+    # Create workbook
+    wb = Workbook()
+    ws = wb.active
+    ws.title = "Draft Checklist"
+    
+    # Set column widths
+    ws.column_dimensions['A'].width = 45
+    ws.column_dimensions['B'].width = 40
+    ws.column_dimensions['C'].width = 18
+    ws.column_dimensions['D'].width = 18
+    ws.column_dimensions['E'].width = 18
+    ws.column_dimensions['F'].width = 10
+    
+    # Define styles
+    bold_font = Font(bold=True)
+    header_font = Font(bold=True, size=11)
+    
+    # Create field mapping for rows 1-11
+    field_mapping = {
+        'Group Name': (1, 2),
+        'Group Eff Date': (3, 4),
+        'TPA': (5, 6),
+        'Third Party Administrator': (5, 6),
+        'Underwriter': (7, 7),
+        'Benefit Plan Name': (8, 9),
+        'Subsidiaries': (10, 10),
+        'Group Address': (11, 11)
+    }
+    
+    row_num = 1
+    
+    # Helper function to find field value
+    def get_field_value(field_name):
+        for _, row in df.iterrows():
+            if field_name.lower() in row['Field'].lower():
+                return row['Extracted_Value'] if row['Extracted_Value'] != 'N/F' else None
+        return None
+    
+    # Rows 1-2: Group Name
+    ws.cell(row=1, column=1).value = "Group Name: "
+    ws.cell(row=1, column=1).font = bold_font
+    ws.cell(row=2, column=1).value = "Group Name in PD:"
+    ws.cell(row=2, column=1).font = bold_font
+    group_name_value = get_field_value('Group Name')
+    if group_name_value:
+        ws.cell(row=2, column=2).value = group_name_value
+    
+    # Rows 3-4: Group Eff Date
+    ws.cell(row=3, column=1).value = "Group Eff Date:"
+    ws.cell(row=3, column=1).font = bold_font
+    ws.cell(row=4, column=1).value = "PD Eff Date:"
+    ws.cell(row=4, column=1).font = bold_font
+    eff_date_value = get_field_value('Eff Date')
+    if eff_date_value:
+        ws.cell(row=4, column=2).value = eff_date_value
+    
+    # Rows 5-6: TPA
+    ws.cell(row=5, column=1).value = "TPA:"
+    ws.cell(row=5, column=1).font = bold_font
+    ws.cell(row=6, column=1).value = "TPA in PD:"
+    ws.cell(row=6, column=1).font = bold_font
+    tpa_value = get_field_value('TPA') or get_field_value('Third Party Administrator')
+    if tpa_value:
+        ws.cell(row=6, column=2).value = tpa_value
+    
+    # Row 7: Underwriter
+    ws.cell(row=7, column=1).value = "Underwriter:"
+    ws.cell(row=7, column=1).font = bold_font
+    underwriter_value = get_field_value('Underwriter')
+    if underwriter_value:
+        ws.cell(row=7, column=2).value = underwriter_value
+    
+    # Rows 8-9: Benefit Plan Name
+    ws.cell(row=8, column=1).value = "Benefit Plan Name:"
+    ws.cell(row=8, column=1).font = bold_font
+    ws.cell(row=9, column=1).value = "Benefit Plan Name in PD:"
+    ws.cell(row=9, column=1).font = bold_font
+    plan_name_value = get_field_value('Plan') or get_field_value('Benefit Plan')
+    if plan_name_value:
+        ws.cell(row=9, column=2).value = plan_name_value
+    
+    # Row 10: Subsidiaries
+    ws.cell(row=10, column=1).value = "Subsidiaries:"
+    ws.cell(row=10, column=1).font = bold_font
+    subsidiaries_value = get_field_value('Subsidiaries')
+    if subsidiaries_value:
+        ws.cell(row=10, column=2).value = subsidiaries_value
+    
+    # Row 11: Group Address
+    ws.cell(row=11, column=1).value = "Group Address:"
+    ws.cell(row=11, column=1).font = bold_font
+    address_value = get_field_value('Address')
+    if address_value:
+        ws.cell(row=11, column=2).value = address_value
+    
+    # Row 12: Empty
+    row_num = 12
+    
+    # Row 13: Headers for Schedule of Benefits section (rows 13-20, not used in this version)
+    row_num = 13
+    ws.cell(row=row_num, column=2).value = "Matches"
+    ws.cell(row=row_num, column=2).font = header_font
+    ws.cell(row=row_num, column=3).value = "Requires enrollment"
+    ws.cell(row=row_num, column=3).font = header_font
+    ws.cell(row=row_num, column=4).value = "Updated PA"
+    ws.cell(row=row_num, column=4).font = header_font
+    
+    # Skip to row 21 (empty row before main checklist items)
+    row_num = 21
+    
+    # Row 22: Headers for checklist items (rows 22-43)
+    row_num = 22
+    ws.cell(row=row_num, column=2).value = "Matches"
+    ws.cell(row=row_num, column=2).font = header_font
+    ws.cell(row=row_num, column=3).value = "Requires Approval"
+    ws.cell(row=row_num, column=3).font = header_font
+    ws.cell(row=row_num, column=4).value = "Requires Notice"
+    ws.cell(row=row_num, column=4).font = header_font
+    ws.cell(row=row_num, column=5).value = "Request Handbook"
+    ws.cell(row=row_num, column=5).font = header_font
+    ws.cell(row=row_num, column=6).value = "Pg #"
+    ws.cell(row=row_num, column=6).font = header_font
+    
+    # Define checklist items (rows 23-43) - these are the fields to match
+    checklist_items = [
+        'UR Vendor',
+        'PPO Network',
+        'Retirees',
+        'BOD, Directors, Officers',
+        'Minimum Hour Requirement',
+        'Dependent Definitions',
+        'Req adding dependents',
+        'Dependent to age 26',
+        'Grandchildren',
+        'Termination Provisions',
+        'Open Enrollment',
+        'Leave of Absence',
+        'Medically Necessary',
+        'E&I',
+        'R&C',
+        'Workers Comp',
+        'Transplant',
+        'ETS Gene Therapy',
+        'Coordination of Benefits',
+        'COBRA',
+        'Subrogation'
+    ]
+    
+    # Add checklist items rows 23-43
+    row_num = 23
+    for item in checklist_items:
+        ws.cell(row=row_num, column=1).value = item
+        
+        # Find if this field exists in the data
+        found = False
+        page_num = 'N/A'
+        
+        for _, data_row in df.iterrows():
+            # Match field names (flexible matching)
+            if (item.lower() in data_row['Field'].lower() or 
+                data_row['Field'].lower() in item.lower() or
+                item.replace(',', '').replace(' ', '').lower() in data_row['Field'].replace(' ', '').lower()):
+                
+                if data_row['Extracted_Value'] != 'N/F':
+                    found = True
+                    if pd.notna(data_row['Page_Number']):
+                        page_num = int(data_row['Page_Number'])
+                break
+        
+        # Set Matches column (B) - True if found, False if not
+        ws.cell(row=row_num, column=2).value = found
+        
+        # Set other columns to False by default
+        ws.cell(row=row_num, column=3).value = False  # Requires Approval
+        ws.cell(row=row_num, column=4).value = False  # Requires Notice
+        ws.cell(row=row_num, column=5).value = False  # Request Handbook
+        
+        # Set page number
+        ws.cell(row=row_num, column=6).value = page_num
+        
+        row_num += 1
+    
+    # Save to BytesIO
+    output = BytesIO()
+    wb.save(output)
+    output.seek(0)
+    
+    return output.getvalue()
+
 # Main Content - Home Page
 if page == "🏠 Home":
     st.markdown('<div class="main-header">🤖 AI-Enabled Plan Document Review System</div>', 
@@ -312,6 +507,24 @@ elif page == "🔨 Generate Checklist":
             st.markdown("**Options:**")
             auto_validate = st.checkbox("Auto-validate", value=True)
             show_warnings = st.checkbox("Show warnings", value=True)
+        
+        # Download Excel Checklist button
+        if st.session_state.checklist_generated:
+            st.markdown("---")
+            col1, col2, col3 = st.columns(3)
+            
+            with col2:
+                group_name = st.session_state.selected_group or "Checklist"
+                excel_data = generate_excel_checklist(df, group_name)
+                
+                st.download_button(
+                    label="📥 Download Excel Checklist",
+                    data=excel_data,
+                    file_name=f"checklist_{group_name.replace(' ', '_')}.xlsx",
+                    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                    use_container_width=True,
+                    type="primary"
+                )
         
         if st.session_state.checklist_generated:
             st.markdown("---")
