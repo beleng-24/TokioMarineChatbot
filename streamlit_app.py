@@ -115,22 +115,6 @@ with st.sidebar:
     st.markdown("**Version:** 1.0  \n**Updated:** Nov 2025")
 
 # Helper functions
-def load_mock_data(group_name):
-    """Load mock data for selected group"""
-    mock_files = {
-        "Aurora Dynamics": "mock_data/orange_output_aurora_dynamics.xlsx",
-        "Helios Manufacturing Inc.": "mock_data/orange_output_helios_manufacturing.xlsx",
-        "Solstice Technologies": "mock_data/orange_output_solstice_technologies.xlsx",
-        "TechVenture Inc.": "mock_data/orange_output_techventure_typos.xlsx",
-        "GlobalCorp International": "mock_data/orange_output_globalcorp.xlsx"
-    }
-    
-    if group_name in mock_files:
-        filepath = Path(mock_files[group_name])
-        if filepath.exists():
-            return pd.read_excel(filepath)
-    return None
-
 def get_confidence_color(confidence):
     """Return color based on confidence level"""
     if confidence >= 0.8:
@@ -1252,88 +1236,47 @@ elif page == "🏠 Home":
 
 # Load Data Page
 elif page == "📊 Load Data":
-    st.markdown('<div class="main-header">📊 Load Orange Output Data</div>', 
+    st.markdown('<div class="main-header">📊 Upload RapidMiner Keywords</div>', 
                 unsafe_allow_html=True)
     
-    tab1, tab2 = st.tabs(["📤 Upload Excel File", "🧪 Use Mock Data"])
+    st.markdown("### Upload RapidMiner CSV Output")
+    st.info("💡 Upload the CSV file exported from RapidMiner with extracted keywords and tags")
     
-    with tab1:
-        st.markdown("### Upload Orange Workflow Output")
-        
-        uploaded_file = st.file_uploader(
-            "Choose an Excel file",
-            type=['xlsx', 'xls'],
-            help="Upload the Excel output from Orange workflow"
-        )
-        
-        if uploaded_file is not None:
-            try:
-                df = pd.read_excel(uploaded_file)
-                
-                # Validate required columns
-                required_cols = ['Field', 'Extracted_Value', 'Confidence', 'Page_Number']
-                if all(col in df.columns for col in required_cols):
-                    st.session_state.current_data = df
-                    st.success(f"✅ File loaded successfully! {len(df)} fields found.")
-                    
-                    # Show preview
-                    st.markdown("#### Data Preview")
-                    st.dataframe(df.head(10), use_container_width=True)
-                    
-                    # Show statistics
-                    col1, col2, col3 = st.columns(3)
-                    found = len(df[df['Extracted_Value'] != 'N/F'])
-                    col1.metric("Total Fields", len(df))
-                    col2.metric("Fields Found", found)
-                    col3.metric("Avg Confidence", f"{df['Confidence'].mean()*100:.1f}%")
-                else:
-                    st.error(f"❌ Invalid file format. Required columns: {', '.join(required_cols)}")
-            except Exception as e:
-                st.error(f"❌ Error reading file: {str(e)}")
+    uploaded_file = st.file_uploader(
+        "Choose a CSV file",
+        type=['csv'],
+        help="Upload the CSV output from RapidMiner workflow"
+    )
     
-    with tab2:
-        st.markdown("### Select Mock Data Group")
-        st.info("💡 These are sample datasets for testing the system")
-        
-        mock_groups = [
-            "Aurora Dynamics",
-            "Helios Manufacturing Inc.",
-            "Solstice Technologies",
-            "TechVenture Inc.",
-            "GlobalCorp International"
-        ]
-        
-        selected_group = st.selectbox(
-            "Choose a group",
-            [""] + mock_groups,
-            help="Select a pre-loaded mock dataset"
-        )
-        
-        if selected_group:
-            if st.button("Load Mock Data", type="primary"):
-                df = load_mock_data(selected_group)
+    if uploaded_file is not None:
+        try:
+            df = pd.read_csv(uploaded_file)
+            
+            # Validate required columns
+            required_cols = ['line_no', 'text', 'tags']
+            if all(col in df.columns for col in required_cols):
+                st.session_state.rapidminer_data = df
+                st.success(f"✅ File loaded successfully! {len(df)} rows found.")
                 
-                if df is not None:
-                    st.session_state.current_data = df
-                    st.session_state.selected_group = selected_group
-                    st.success(f"✅ Loaded mock data for {selected_group}")
-                    
-                    # Show preview
-                    st.markdown("#### Data Preview")
-                    st.dataframe(df, use_container_width=True)
-                    
-                    # Show statistics
-                    st.markdown("#### Statistics")
-                    col1, col2, col3, col4 = st.columns(4)
-                    found = len(df[df['Extracted_Value'] != 'N/F'])
-                    missing = len(df) - found
-                    
-                    col1.metric("Total Fields", len(df))
-                    col2.metric("Found", found, delta="Good" if found > 15 else "Review")
-                    col3.metric("Missing", missing, delta="⚠️" if missing > 5 else "✓")
-                    col4.metric("Avg Confidence", f"{df['Confidence'].mean()*100:.0f}%")
-                else:
-                    st.error("❌ Could not load mock data. Check file path.")
+                # Show preview
+                st.markdown("#### Data Preview")
+                st.dataframe(df.head(10), use_container_width=True)
+                
+                # Show statistics
+                col1, col2, col3 = st.columns(3)
+                col1.metric("Total Rows", len(df))
+                col2.metric("Tagged Rows", len(df[df['tags'].notna()]))
+                col3.metric("Unique Tags", len(set(';'.join(df['tags'].dropna()).split(';'))))
+                
+                st.markdown("#### Sample Tags")
+                all_tags = set()
+                for tags in df['tags'].dropna():
+                    all_tags.update(tags.split(';'))
+                st.write(", ".join(sorted(list(all_tags))[:20]))
+            else:
+                st.error(f"❌ Invalid file format. Required columns: {', '.join(required_cols)}")
+        except Exception as e:
+            st.error(f"❌ Error reading file: {str(e)}")
 
 # Generate Checklist Page
 elif page == "🔨 Generate Checklist":
